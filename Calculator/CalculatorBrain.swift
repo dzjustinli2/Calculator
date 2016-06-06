@@ -19,6 +19,10 @@ class CalculatorBrain {
         accumulator = operand
     }
     
+    func addUnaryOperation(symbol: String, operation: (Double) -> Double) {
+        operations[symbol] = Operation.UnaryOperation(operation)
+    }
+    
     private var operations: Dictionary<String, Operation> = [
         "π" : Operation.Constant(M_PI),
         "e" : Operation.Constant(M_E),
@@ -89,7 +93,7 @@ class CalculatorBrain {
         }
     }
     
-    func clear(){
+    private func clear(){
         accumulator = 0.0
         pending = nil
         internalProgram.removeAll()

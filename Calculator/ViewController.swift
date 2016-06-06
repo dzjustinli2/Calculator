@@ -8,11 +8,28 @@
 
 import UIKit
 
+var calculatorCount = 0
+
 class ViewController: UIViewController {
 
     @IBOutlet private weak var display: UILabel!
     
     private var userIsInTheMiddleOfTyping = false
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        calculatorCount += 1
+        print("loaded up a new calculator. count = \(calculatorCount)")
+        brain.addUnaryOperation("Z") { [weak me = self] in
+            me?.display.textColor = UIColor.redColor()
+            return sqrt($0)
+        }
+    }
+    
+    deinit {
+        calculatorCount -= 1
+        print("calculator left the heap. count = \(calculatorCount)")
+    }
     
     @IBAction private func touchDigit(sender: UIButton) {
         let digit = sender.currentTitle!
